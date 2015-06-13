@@ -4,7 +4,7 @@ import RPi.GPIO as gpio
 
 class Relay: 
   pin = 0 
-  isOn = True
+  isOn = False
   invert = True
   
   def __init__(self, pin, invert=True): 
@@ -13,9 +13,9 @@ class Relay:
     gpio.setmode(gpio.BCM)
     gpio.setup(self.pin, gpio.OUT)
     if invert: 
-      gpio.output(self.pin, False)
+      gpio.output(self.pin, not self.isOn)
     else: 
-      gpio.output(self.pin, True)
+      gpio.output(self.pin, self.isOn)
       
       
   
