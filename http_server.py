@@ -7,19 +7,20 @@ from box import Box
 
   
 def startServer(box):
-  @bottle.route("/<num>/on")
+  @bottle.route("/api/<num>/on")
   def on(num): 
     box.on(int(num))
 
-  @bottle.route("/<num>/off")
+  @bottle.route("/api/<num>/off")
   def off(num): 
     box.off(int(num))
 
-  @bottle.route("/<num>/state")
+  @bottle.route("/api/<num>/state")
   def singleState(num): 
-    return box.state(int(num))
+    bottle.response.content_type = 'application/json'
+    return json.dumps(box.state(int(num)))
     
-  @bottle.route("/state")
+  @bottle.route("/api/state")
   def state(): 
     bottle.response.content_type = 'application/json'
     return json.dumps(box.allState())
